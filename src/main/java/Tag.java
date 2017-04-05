@@ -25,6 +25,7 @@ public class Tag {
     return this.id;
   }
 
+
   public int getTimesUsed() {
     // return this.timesUsed;
     String sqlQuery = "SELECT * FROM tags_posts WHERE tag_id=:tagid;";
@@ -111,7 +112,6 @@ public class Tag {
     } else {
       Tag newTag = (Tag) otherTag;
       return this.getTagName().equals(newTag.getTagName()) &&
-      // this.getTimesUsed().equals(newTag.getTimesUsed()) &&
       this.getTagId() == newTag.getTagId();
     }
   }

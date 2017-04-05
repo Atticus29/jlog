@@ -30,12 +30,34 @@ public class Post {
     return this.id;
   }
 
+  public void tagThisPost(Tag tag) {
+    String sql = "INSERT INTO tags_posts (tag_id, post_id) VALUES (:tagId, :postId);";
+    try(Connection con = DB.sql2o.open()) {
+    con.createQuery(sql)
+    .addParameter("tagId", tag.getTagId())
+    .addParameter("postId", this.id)
+    .executeUpdate();
+}
+  }
+
   public static List<Post> all() {
     String sql = "SELECT * FROM posts;";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
       .throwOnMappingFailure(false)
       .executeAndFetch(Post.class);
+    }
+  }
+
+  public List<Tag> getTags() {
+    String sql = "SELECT tags.* FROM posts JOIN tags_posts ON (posts.id = tags_posts.post_id) JOIN tags ON (tags.id = tags_posts.tag_id) WHERE posts.id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+      .addParameter("id", this.id)
+      // .throwOnMappingFailure(false)
+      .addColumnMapping("name", "tagName")
+      .addColumnMapping("num_times_used", "timesUsed")
+      .executeAndFetch(Tag.class);
     }
   }
 
@@ -75,30 +97,30 @@ public class Post {
   }
 
   public void delete() {
-  try(Connection con = DB.sql2o.open()) {
-    String sql = "DELETE FROM posts WHERE id = :id;";
-    con.createQuery(sql)
-    .addParameter("id", this.id)
-    // .executeUpdate();
-    // String joinDeleteQuery = "DELETE FROM tags_posts WHERE post_id = :postId";
-    // con.createQuery(joinDeleteQuery)
-    // .addParameter("postId", this.getPostId())
-    .executeUpdate();
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM posts WHERE id = :id;";
+      con.createQuery(sql)
+      .addParameter("id", this.id)
+      .executeUpdate();
+      String joinDeleteQuery = "DELETE FROM tags_posts WHERE post_id = :postId";
+      con.createQuery(joinDeleteQuery)
+      .addParameter("postId", this.getPostId())
+      .executeUpdate();
+    }
   }
-}
 
-public void update(String newTitle, String newBody) {
-  // System.out.println(newTitle);//yes
-  //   System.out.println(this.id);//yes
-  try(Connection con = DB.sql2o.open()) {
-    String sql = "UPDATE posts SET title = :newTitle, body=:newBody WHERE id = :id;";
-    con.createQuery(sql)
+  public void update(String newTitle, String newBody) {
+    // System.out.println(newTitle);//yes
+    //   System.out.println(this.id);//yes
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE posts SET title = :newTitle, body=:newBody WHERE id = :id;";
+      con.createQuery(sql)
       .addParameter("newTitle", newTitle)
       .addParameter("newBody", newBody)
       .addParameter("id", this.id)
       .executeUpdate();
+    }
   }
-}
 
   @Override
   public boolean equals(Object otherPost){
