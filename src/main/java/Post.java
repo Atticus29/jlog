@@ -87,14 +87,14 @@ public class Post {
   }
 }
 
-public void update(String newTitle) {
+public void update(String newTitle, String newBody) {
   // System.out.println(newTitle);//yes
   //   System.out.println(this.id);//yes
   try(Connection con = DB.sql2o.open()) {
-    String sql = "UPDATE posts SET title = :newTitle WHERE id = :id;";
+    String sql = "UPDATE posts SET title = :newTitle, body=:newBody WHERE id = :id;";
     con.createQuery(sql)
       .addParameter("newTitle", newTitle)
-      // .addParameter("newBody", newBody)
+      .addParameter("newBody", newBody)
       .addParameter("id", this.id)
       .executeUpdate();
   }

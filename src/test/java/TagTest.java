@@ -69,9 +69,6 @@ public void update_updatesTagDescription_true() {
   Tag testTag2 = new Tag ("vodoo");
   testTag2.save();
   testTag2.update("sorcery");
-  // Tag whateverTag = Tag.findByTag(testTag2.getTagName());
-  // whateverTag.save();
-  //  assertEquals(whateverTag.getTagName(), Tag.findByTag(testTag2.getTagName()).getTagName());
   assertEquals("sorcery", Tag.findByTag("sorcery").getTagName());
 }
 

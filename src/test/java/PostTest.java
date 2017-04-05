@@ -23,8 +23,6 @@ public class PostTest {
   @Test
   public void post_instantiatesCorrectly_true() {
     assertTrue(testPost instanceof Post);
-    // assertEquals("Beach", testPost.getPostTitle());
-    // assertEquals("I went to the beach today.", testPost.getPostBody());
   }
 
   @Test
@@ -62,21 +60,9 @@ public class PostTest {
 public void update_updatesPostDescription_true() {
   Post testPost2 = new Post("Asdf", "Fdsad!");
   testPost2.save();
-  testPost2.update("Take a nap");
-
+  testPost2.update("Take a nap", "Wherever possible");
   assertEquals("Take a nap", Post.findByTitle("Take a nap").getPostTitle());
-//   String newString = testPost2.getPostTitle(); //take a nap but its not
-//   System.out.println("testpost12gettitle " + newString); //it is asdaf WHY
-//   System.out.println( Post.findByTitle(newString));
-//
-//
-//   Post whateverPost = Post.findByTitle(testPost2.getPostTitle()); //not defined. why?
-//   whateverPost.save();
-//   String id1 = whateverPost.getPostTitle();
-//   // int id2 = Post.findByTitle(testPost2.getPostTitle()).getPostId();
-//   // assertTrue(id1 == id2);
-//    assertEquals(whateverPost.getPostTitle(), Post.findByTitle(testPost2.getPostTitle()).getPostTitle());
-// //assertTrue(whateverPost.getPostTitle().equals(id1));
+  assertEquals("Wherever possible", Post.findByTitle("Take a nap").getPostBody());
 }
 
 @Test
