@@ -88,6 +88,8 @@ public class Post {
 }
 
 public void update(String newTitle) {
+  // System.out.println(newTitle);//yes
+  //   System.out.println(this.id);//yes
   try(Connection con = DB.sql2o.open()) {
     String sql = "UPDATE posts SET title = :newTitle WHERE id = :id;";
     con.createQuery(sql)
