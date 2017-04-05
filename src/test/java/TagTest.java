@@ -64,24 +64,16 @@ public class TagTest {
     assertTrue(allTags.containsAll(Arrays.asList(tagArray)));
   }
 
-//   @Test
-// public void update_updatesTagDescription_true() {
-//   Tag testTag2 = new Tag ("vodoo");
-//   testTag2.save();
-//   testTag2.update("sorcery");
-//   String newString = testTag2.getTagTitle(); //take a nap but its not
-//   System.out.println("testtag12gettitle " + newString); //it is asdaf WHY
-//   System.out.println( Tag.findByTitle(newString));
-//
-//
-//   Tag whateverTag = Tag.findByTitle(testTag2.getTagTitle()); //not defined. why?
-//   whateverTag.save();
-//   String id1 = whateverTag.getTagTitle();
-//   // int id2 = Tag.findByTitle(testTag2.getTagTitle()).getTagId();
-//   // assertTrue(id1 == id2);
-//    assertEquals(whateverTag.getTagTitle(), Tag.findByTitle(testTag2.getTagTitle()).getTagTitle());
-// //assertTrue(whateverTag.getTagTitle().equals(id1));
-// }
+  @Test
+public void update_updatesTagDescription_true() {
+  Tag testTag2 = new Tag ("vodoo");
+  testTag2.save();
+  testTag2.update("sorcery");
+  // Tag whateverTag = Tag.findByTag(testTag2.getTagName());
+  // whateverTag.save();
+  //  assertEquals(whateverTag.getTagName(), Tag.findByTag(testTag2.getTagName()).getTagName());
+  assertEquals("sorcery", Tag.findByTag("sorcery").getTagName());
+}
 
 @Test
 public void delete_deletesTag_true() {

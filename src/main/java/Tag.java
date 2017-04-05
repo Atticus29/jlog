@@ -94,18 +94,15 @@ public class Tag {
     }
   }
 
-  // public void update(String newTitle) {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "UPDATE tags SET title = :newTitle WHERE id = :id;";
-  //     con.createQuery(sql)
-  //     .addParameter("newTitle", newTitle)
-  //     // .addParameter("newBody", newBody)
-  //     .addParameter("id", this.id)
-  //     .executeUpdate();
-  //     System.out.println("I RAN");
-  //     System.out.println(newTitle);
-  //   }
-  // }
+  public void update(String name) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE tags SET name = :name WHERE id = :id;";
+      con.createQuery(sql)
+      .addParameter("name", name)
+      .addParameter("id", this.id)
+      .executeUpdate();
+    }
+  }
 
   @Override
   public boolean equals(Object otherTag){
