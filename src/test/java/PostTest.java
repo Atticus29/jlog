@@ -57,4 +57,22 @@ public class PostTest {
     assertTrue(allPosts.size()>1);
     assertTrue(allPosts.containsAll(Arrays.asList(postArray)));
   }
+
+  @Test
+public void update_updatesPostDescription_true() {
+  Post testPost2 = new Post("Asdf", "Fdsad!");
+  System.out.println("Pre-update title is: " + testPost2.getPostTitle());
+  testPost2.update("Take a nap");
+  System.out.println("Post-update title is: " + testPost2.getPostTitle());
+  // , "Slept all day.");
+  assertEquals("Take a nap", testPost2.getPostTitle());
+  // assertEquals("Slept all day.", testPost.getPostBody());
+}
+
+@Test
+public void delete_deletesPost_true() {
+  testPost.delete();
+  assertEquals(0, Post.all().size());
+}
+
 }

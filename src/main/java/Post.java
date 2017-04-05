@@ -62,6 +62,30 @@ public class Post {
     }
   }
 
+  public void delete() {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "DELETE FROM posts WHERE id = :id;";
+    con.createQuery(sql)
+    .addParameter("id", this.id)
+    // .executeUpdate();
+    // String joinDeleteQuery = "DELETE FROM tags_posts WHERE post_id = :postId";
+    // con.createQuery(joinDeleteQuery)
+    // .addParameter("postId", this.getPostId())
+    .executeUpdate();
+  }
+}
+
+public void update(String newTitle) {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "UPDATE posts SET title = :newTitle WHERE id = :id;";
+    con.createQuery(sql)
+      .addParameter("newTitle", newTitle)
+      // .addParameter("newBody", newBody)
+      .addParameter("id", this.id)
+      .executeUpdate();
+  }
+}
+
   @Override
   public boolean equals(Object otherPost){
     if (!(otherPost instanceof Post)) {
