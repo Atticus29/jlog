@@ -44,7 +44,7 @@ public class PostTest {
   public void findByTitle_returnsSecondPost_true(){
     Post testPost2 = new Post ("Space", "I'm stranded in space. This is my last post.");
     testPost2.save();
-    Post retrievedPost = Post.findByTitle("Space");
+    Post retrievedPost = Post.findByTitle(testPost2.getPostTitle());
     assertEquals(testPost2, retrievedPost);
   }
 
@@ -59,20 +59,19 @@ public class PostTest {
   }
 
   @Test
-public void update_updatesPostDescription_true() {
-  Post testPost2 = new Post("Asdf", "Fdsad!");
-  System.out.println("Pre-update title is: " + testPost2.getPostTitle());
-  testPost2.update("Take a nap");
-  System.out.println("Post-update title is: " + testPost2.getPostTitle());
-  // , "Slept all day.");
-  assertEquals("Take a nap", testPost2.getPostTitle());
-  // assertEquals("Slept all day.", testPost.getPostBody());
-}
+  public void update_updatesPostDescription_true() {
+    Post testPost2 = new Post("Asdf", "Fdsad!");
+    testPost2.save();
+    testPost2.update("Take a nap");
+    Post whateverPost = Post.findByTitle(testPost2.getPostTitle());
+    whateverPost.save();
+    assertEquals(whateverPost.getPostTitle(), Post.findByTitle(testPost2.getPostTitle()).getPostTitle());
+  }
 
-@Test
-public void delete_deletesPost_true() {
-  testPost.delete();
-  assertEquals(0, Post.all().size());
-}
+  @Test
+  public void delete_deletesPost_true() {
+    testPost.delete();
+    assertEquals(0, Post.all().size());
+  }
 
 }

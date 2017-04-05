@@ -19,15 +19,15 @@ public class Post {
   }
 
   public String getPostTitle() {
-    return title;
+    return this.title;
   }
 
   public String getPostBody() {
-    return body;
+    return this.body;
   }
 
   public int getPostId() {
-    return id;
+    return this.id;
   }
 
   public static List<Post> all() {
@@ -44,6 +44,18 @@ public class Post {
       String sql = "SELECT * FROM posts where title=:title";
       Post post = con.createQuery(sql)
       .addParameter("title", title)
+      .throwOnMappingFailure(false)
+      .executeAndFetchFirst(Post.class);
+      System.out.println(post.getPostTitle());
+      return post;
+    }
+  }
+
+  public static Post findById(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM posts where id=:id";
+      Post post = con.createQuery(sql)
+      .addParameter("id", id)
       .throwOnMappingFailure(false)
       .executeAndFetchFirst(Post.class);
       return post;
